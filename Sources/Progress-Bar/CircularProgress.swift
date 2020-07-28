@@ -67,7 +67,7 @@ public struct PercentageIndicator: AnimatableModifier {
                             .padding(.all, 20)
                     )
                     
-                Text("\(Int(percentage * 100)) %")
+                Text("\(Int(percentage * 100))%")
                     .foregroundColor(fontColor)
                     .font(.system(size: fontSize))
                     .fontWeight(.bold)
