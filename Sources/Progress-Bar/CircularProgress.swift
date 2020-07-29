@@ -9,21 +9,20 @@ public struct CircularProgress: View {
     var borderColor2 : LinearGradient
     var borderWidth : CGFloat
     
-    public init(percentage: CGFloat, fontSize: CGFloat, backgroundColor : Color, fontColor: Color, borderColor1: Color, borderColor2: LinearGradient, borderWitdh : CGFloat) {
+    public init(percentage: CGFloat, fontSize: CGFloat, backgroundColor : Color, fontColor: Color, borderColor1: Color, borderColor2: LinearGradient, borderWidth : CGFloat) {
         self.percentage = percentage
         self.fontSize = fontSize
         self.backgroundColor = backgroundColor
         self.fontColor = fontColor
         self.borderColor1 = borderColor1
         self.borderColor2 = borderColor2
-        self.borderWidth = borderWitdh
+        self.borderWidth = borderWidth
     }
-
+    
     public var body: some View {
         return (Circle()
                     .foregroundColor(backgroundColor)
                     .modifier(PercentageIndicator(percentage: self.percentage, fontSize: fontSize, fontColor: fontColor, borderColor1: borderColor1, borderColor2: borderColor2, borderWidth: borderWidth)))
-        
     }
 }
 
