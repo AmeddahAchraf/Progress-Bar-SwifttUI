@@ -7,20 +7,22 @@ public struct CircularProgress: View {
     var fontColor : Color
     var borderColor1 : Color
     var borderColor2 : LinearGradient
+    var borderWidth : CGFloat
     
-    public init(percentage: CGFloat, fontSize: CGFloat, backgroundColor : Color, fontColor: Color, borderColor1: Color, borderColor2: LinearGradient) {
+    public init(percentage: CGFloat, fontSize: CGFloat, backgroundColor : Color, fontColor: Color, borderColor1: Color, borderColor2: LinearGradient, borderWitdh : CGFloat) {
         self.percentage = percentage
         self.fontSize = fontSize
         self.backgroundColor = backgroundColor
         self.fontColor = fontColor
         self.borderColor1 = borderColor1
         self.borderColor2 = borderColor2
+        self.borderWidth = borderWitdh
     }
 
     public var body: some View {
         return (Circle()
                     .foregroundColor(backgroundColor)
-                    .modifier(PercentageIndicator(percentage: self.percentage, fontSize: fontSize, fontColor: fontColor, borderColor1: borderColor1, borderColor2: borderColor2)))
+                    .modifier(PercentageIndicator(percentage: self.percentage, fontSize: fontSize, fontColor: fontColor, borderColor1: borderColor1, borderColor2: borderColor2, borderWidth: borderWidth)))
         
     }
 }
@@ -32,6 +34,7 @@ public struct PercentageIndicator: AnimatableModifier {
     let fontColor : Color
     let borderColor1 : Color
     let borderColor2 : LinearGradient
+    var borderWidth : CGFloat
     
     public var animatableData: CGFloat {
         get { percentage }
@@ -40,7 +43,7 @@ public struct PercentageIndicator: AnimatableModifier {
     
     public func body(content: Content) -> some View {
         content
-            .overlay(CircularProgressView(percentage: percentage, fontSize: fontSize, fontColor: fontColor, borderColor1: borderColor1, borderColor2: borderColor2))
+            .overlay(CircularProgressView(percentage: percentage, fontSize: fontSize, fontColor: fontColor, borderColor1: borderColor1, borderColor2: borderColor2, borderWidth: borderWidth))
     }
     
     public struct CircularProgressView: View {
@@ -49,29 +52,30 @@ public struct PercentageIndicator: AnimatableModifier {
         let fontColor : Color
         let borderColor1 : Color
         let borderColor2 : LinearGradient
+        var borderWidth : CGFloat
         
         public var body: some View {
             ZStack {
                 
                 Circle()
-                    .stroke(lineWidth: 20.0)
+                    .stroke(lineWidth: borderWidth)
                     .opacity(0.3)
                     .foregroundColor(borderColor1)
-                    .padding(.all, 20)
+                    .padding(.all, borderWidth/2)
                 
                 borderColor2
                     .mask(Circle()
                             .trim(from: 0.0, to: self.percentage)
-                            .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round))
+                            .stroke(style: StrokeStyle(lineWidth: borderWidth, lineCap: .round, lineJoin: .round))
                             .rotationEffect(Angle(degrees: 270.0))
-                            .padding(.all, 20)
+                            .padding(.all, borderWidth/2)
                     )
                     
                 Text("\(Int(percentage * 100))%")
                     .foregroundColor(fontColor)
                     .font(.system(size: fontSize))
                     .fontWeight(.bold)
-                    .scaleEffect((percentage/2)+1)
+                    .scaleEffect((percentage/2)+0.9)
             }
         }
     }
