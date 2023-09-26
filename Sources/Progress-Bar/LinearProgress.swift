@@ -31,7 +31,7 @@ public struct LinearProgress: View {
                 foregroundColor
                     .mask(Rectangle()
                             .cornerRadius(geometry.size.width/7)
-                            .animation(.linear))
+                            .animation(.linear, value: percentage))
                     .frame(width: min(geometry.size.width*percentage, geometry.size.width) , height: geometry.size.height)
             }
         }
